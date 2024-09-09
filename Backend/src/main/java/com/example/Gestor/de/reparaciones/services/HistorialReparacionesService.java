@@ -139,9 +139,9 @@ public class HistorialReparacionesService {
         return cantidad;
     }
 
+    /*
     public int getCantidadTipoReparaciones(int tipoReparacion) {
         List<String> tiposAutomovil = new ArrayList<>(); // Utilizamos una lista en lugar de un Set
-
         List<ReparacionEntity> reparaciones = reparacionService.getReparaciones();
         for (ReparacionEntity reparacion : reparaciones) {
             if (reparacion.getTipoReparacion() == tipoReparacion) {
@@ -155,12 +155,34 @@ public class HistorialReparacionesService {
                 }
             }
         }
-
         return tiposAutomovil.size();
+    }
+     */
+
+    //Deficiencia. La función solo muestra una reparacion por tipo por patente, para solucionarlo hay que buscar
+    //una lista de autos en ve de una en partirular, recorrerla y buscarlo
+    public int getCantidadTipoReparacioneByTipoAutomovil(int tipoReparacion, String tipoAuto) {
+        int cantidad = 0;
+
+        //Se obtienen todas las reparaciones, este se puede modificar después
+        List<ReparacionEntity> reparaciones = reparacionService.getReparaciones();
+        for (ReparacionEntity reparacion : reparaciones) {
+            if (reparacion.getTipoReparacion() == tipoReparacion) {
+                String patente = reparacion.getPatente();
+                AutomovilEntity automovil = automovilService.getAutomovilByPatente(patente);
+                //String tipoAutomovil = automovil.getTipo();
+
+                if(automovil.getTipo().equals(tipoAuto)){
+                    cantidad++;
+                }
+
+            }
+        }
+        return cantidad;
     }
 
 
-
+/*
     public int getMontoTipoReparaciones(int tipoReparacion) {
         List<String> tiposAutomovil = new ArrayList<>(); // Utilizamos una lista en lugar de un Set
         List<String> tiposMotor = new ArrayList<>();
@@ -185,50 +207,101 @@ public class HistorialReparacionesService {
         }
         return sumaMontos;
     }
+ */
+
+    //Comprobarrrrrrrrrrrrr
+    public int getMontoTipoReparacionByTipoAutomovil(int tipoReparacion, String tipoAuto) {
+        List<String> tiposAutomovil = new ArrayList<>();
+        List<String> tiposMotor = new ArrayList<>();
+
+        List<ReparacionEntity> reparaciones = reparacionService.getReparaciones();
+        for (ReparacionEntity reparacion : reparaciones) {
+            if (reparacion.getTipoReparacion() == tipoReparacion) {
+                String patente = reparacion.getPatente();
+                AutomovilEntity automovil = automovilService.getAutomovilByPatente(patente);
+                //String tipoAutomovil = automovil.getTipo();
+                if(automovil.getTipo().equals(tipoAuto)){
+                    tiposMotor.add(automovil.getMotor());
+                }
+            }
+        }
+        int sumaMontos = 0;
+        for(String tipoMotor : tiposMotor){
+            sumaMontos += valorReparacionesService.getMonto(tipoReparacion, tipoMotor);
+        }
+        return sumaMontos;
+    }
 
 
     public List<ReparacionesvsTipoAutos> reporteReparacionesvsTipoAutos(){
         List<ReparacionesvsTipoAutos> reparacionesvsTipoAutos = new ArrayList<>();
 
-        int cantidadReparaciones = 0;
-        int montoTotalReparaciones = 0;
-        String nombreReparacion = null;
+        int cantSed = 0; //cantidad de reparaciones Sedan
+        int montSed = 0; //monto total Sedan
+        int cantHatch = 0;
+        int montHatch = 0;
+        int cantSuv = 0;
+        int montSuv = 0;
+        int cantPick = 0;
+        int montPick = 0;
+        int cantFurg = 0;
+        int montFurg = 0;
+        int totReparac = 0; //monto total de reparaciones
+
+        String nombRep = null;
 
         // Obtener los datos y agregarlos a la lista
         for(int tipoReparacion = 1; tipoReparacion <= 11; tipoReparacion++){
-            cantidadReparaciones = getCantidadTipoReparaciones(tipoReparacion);
-            montoTotalReparaciones = getMontoTipoReparaciones(tipoReparacion);
+            cantSed = getCantidadTipoReparacioneByTipoAutomovil(tipoReparacion, "Sedan");
+            cantHatch = getCantidadTipoReparacioneByTipoAutomovil(tipoReparacion, "Hatchback");
+            cantSuv = getCantidadTipoReparacioneByTipoAutomovil(tipoReparacion, "Suv");
+            cantPick = getCantidadTipoReparacioneByTipoAutomovil(tipoReparacion, "Pickup");
+            cantFurg = getCantidadTipoReparacioneByTipoAutomovil(tipoReparacion, "Furgoneta");
+
+            montSed = getMontoTipoReparacionByTipoAutomovil(tipoReparacion, "Sedan");
+            montHatch = getMontoTipoReparacionByTipoAutomovil(tipoReparacion, "Hatchback");
+            montSuv = getMontoTipoReparacionByTipoAutomovil(tipoReparacion, "Suv");
+            montPick = getMontoTipoReparacionByTipoAutomovil(tipoReparacion, "Pickup");
+            montFurg = getMontoTipoReparacionByTipoAutomovil(tipoReparacion, "Furgoneta");
+
+            //cantidadReparaciones = getCantidadTipoReparaciones(tipoReparacion);
+            //montoTotalReparaciones = getMontoTipoReparaciones(tipoReparacion);
             if(tipoReparacion == 1) {
-                nombreReparacion = "Reparaciones del Sistema de Frenos";
+                nombRep = "Reparaciones del Sistema de Frenos";
             }else if(tipoReparacion == 2){
-                nombreReparacion = "Servicio del Sistema de Refrigeración";
+                nombRep = "Servicio del Sistema de Refrigeración";
             }else if(tipoReparacion == 3){
-                nombreReparacion = "Reparaciones del Motor";
+                nombRep = "Reparaciones del Motor";
             }else if(tipoReparacion == 4){
-                nombreReparacion = "Reparaciones de la Transmisión";
+                nombRep = "Reparaciones de la Transmisión";
             }else if(tipoReparacion == 5){
-                nombreReparacion = "Reparación del Sistema Eléctrico";
+                nombRep = "Reparación del Sistema Eléctrico";
             }else if(tipoReparacion == 6){
-                nombreReparacion = "Reparaciones del Sistema de Escape";
+                nombRep = "Reparaciones del Sistema de Escape";
             }else if(tipoReparacion == 7){
-                nombreReparacion = "Reparación de Neumáticos y Ruedas";
+                nombRep = "Reparación de Neumáticos y Ruedas";
             }else if(tipoReparacion == 8){
-                nombreReparacion = "Reparaciones de la Suspensión y la Dirección";
+                nombRep = "Reparaciones de la Suspensión y la Dirección";
             }else if(tipoReparacion == 9){
-                nombreReparacion = "Reparación del Sistema de Aire Acondicionado y Calefacción";
+                nombRep = "Reparación del Sistema de Aire Acondicionado y Calefacción";
             }else if(tipoReparacion == 10){
-                nombreReparacion = "Reparaciones del Sistema de Combustible";
+                nombRep = "Reparaciones del Sistema de Combustible";
             }else if(tipoReparacion == 11){
-                nombreReparacion = "Reparación y Reemplazo del Parabrisas y Cristales";
+                nombRep = "Reparación y Reemplazo del Parabrisas y Cristales";
             }
 
+            totReparac = ((montSed * cantSed) + (montHatch * cantHatch) +
+                    (montSuv  * cantSuv) + (montPick * cantPick) + (montFurg * cantFurg));
+
             // Crear objeto ReparacionesvsTipoAutos y agregarlo a la lista
-            ReparacionesvsTipoAutos reparacionPorTipoAuto = new ReparacionesvsTipoAutos(nombreReparacion, cantidadReparaciones, montoTotalReparaciones);
+            ReparacionesvsTipoAutos reparacionPorTipoAuto = new ReparacionesvsTipoAutos(nombRep,cantSed,montSed,
+                    cantHatch,montHatch,cantSuv,montSuv,cantPick,montPick,cantFurg,montFurg,totReparac);
+            
             reparacionesvsTipoAutos.add(reparacionPorTipoAuto);
         }
 
         // Ordenar la lista por montoTotalReparaciones de mayor a menor
-        Collections.sort(reparacionesvsTipoAutos, Comparator.comparingInt(ReparacionesvsTipoAutos::getMontoTotalReparaciones).reversed());
+        //Collections.sort(reparacionesvsTipoAutos, Comparator.comparingInt(ReparacionesvsTipoAutos::getMontoTotalReparaciones).reversed());
 
         return reparacionesvsTipoAutos;
     }

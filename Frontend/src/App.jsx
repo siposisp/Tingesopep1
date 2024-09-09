@@ -10,12 +10,15 @@ import AddEditHistorialReparaciones from './components/AddEditHistorialReparacio
 import IngresarAutomovil from './components/IngresarAutomovil';
 import ReparacionesList from './components/ReparacionesList';
 import AddEditReparacion from './components/AddEditReparaciones';
-import ReporteTiempoPromedio from './components/ReporteTiempoPromedio';
 import ReporteReparacionesVsTiposAutos from './components/ReporteReparacionesVsTipoAutos';
-import ReporteReparacionesVsTipoMotor from './components/ReporteReparacionesVsTipoMotor';
+import ReporteCompararMeses from './components/ReporteCompararMeses';
 import ReparacionSelectionForm from './components/SeleccionarReparacion';
 import BonosList from './components/DescuentoBonosList';
 import AddEditBono from './components/AddEditDescuentoBonos';
+import IngresoTaller from './components/IngresoTaller';
+import RetiroTaller from './components/RetiroTaller';
+import Pagar from './components/Pagar';
+
 
 function App() {
   return (
@@ -33,20 +36,25 @@ function App() {
               <Route path="/historialReparaciones/add" element={<AddEditHistorialReparaciones/>} />
               <Route path="/historialReparaciones/edit/:id" element={<AddEditHistorialReparaciones/>} />
 
+              <Route path="/ingresoTaller" element={<IngresoTaller/>} />
+              <Route path="/retiroTaller" element={<RetiroTaller/>} />
 
               <Route path="/ingresarAutomovil/add" element={<IngresarAutomovil/>} />
               <Route path="/ingresarAutomovil/edit/:id" element={<IngresarAutomovil/>} />
+              
+              
 
               <Route path="/reparaciones/list" element={<ReparacionesList/>} />
               <Route path="/reparaciones/add" element={<AddEditReparacion/>} />
               <Route path="/reparaciones/edit/:id" element={<AddEditReparacion/>} />
 
-              <Route path="/reportes/ReporteTiempoPromedio" element={<ReporteTiempoPromedio/>} />
               <Route path="/reportes/ReporteReparacionesVsTiposAutos" element={<ReporteReparacionesVsTiposAutos/>} />
-              <Route path="/reportes/ReporteReparacionesVsTipoMotor" element={<ReporteReparacionesVsTipoMotor/>} />
+              <Route path="/reportes/ReporteCompararMeses" element={<ReporteCompararMeses/>} />
 
               <Route path="/agregarReparacion/list" element={<ReparacionSelectionForm/>} />
               <Route path="/reparaciones/select/:idH/:patenteH" element={<ReparacionSelectionForm />} />
+              <Route path="/pagar/:patente" element={<Pagar />} />
+
 
               <Route path="/bonos/list" element={<BonosList/>} />
               <Route path="/bonos/add" element={<AddEditBono/>} />

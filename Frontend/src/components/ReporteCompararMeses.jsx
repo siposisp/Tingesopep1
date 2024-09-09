@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,10 +14,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import reportesServices from "../services/reportes.service";
 
-function ReporteReparacionesVsTiposAutos() {
+function ReporteCompararMeses() {
     const [reporte, setReporte] = useState([]);
-    const [mes, setMes] = useState(12); // Mes predeterminado: diciembre
-    const [ano, setAno] = useState(2023); // Año predeterminado: 2023
+    const [mes, setMes] = useState(1); // Mes predeterminado: enero
+    const [ano, setAno] = useState(2024); // Año predeterminado: 2024
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [error, setError] = useState(null);
@@ -38,13 +37,17 @@ function ReporteReparacionesVsTiposAutos() {
         { value: 12, label: "Diciembre" }
     ];
 
-    const obtenerReporteReparacionesVsTiposAutos = async (mes, ano) => {
+    const obtenerNombreMes = (numeroMes) => {
+        return meses.find(m => m.value === numeroMes)?.label || "";
+    };
+
+    const obtenerReporteCompararMeses = async (mes, ano) => {
         setIsLoading(true);
         setIsSubmitted(false);
         setError(null);
 
         try {
-            const response = await reportesServices.getReporteReparacionesVsTipoAuto({ mes, ano });
+            const response = await reportesServices.getReporteCompararMeses({ mes, ano });
             setReporte(response.data);
             setIsSubmitted(true);
         } catch (error) {
@@ -65,7 +68,7 @@ function ReporteReparacionesVsTiposAutos() {
 
     return (
         <div className="container mt-4">
-            <h2 className="text-center mb-4">Reporte de Reparaciones VS Tipos de auto</h2>
+            <h2 className="text-center mb-4">Reporte de comparación de meses</h2>
 
             <div className="d-flex justify-content-center mb-4">
                 <TextField
@@ -92,7 +95,7 @@ function ReporteReparacionesVsTiposAutos() {
                     sx={{ marginRight: 2 }}
                 />
 
-                <Button variant="contained" onClick={() => obtenerReporteReparacionesVsTiposAutos(mes, ano)}>
+                <Button variant="contained" onClick={() => obtenerReporteCompararMeses(mes, ano)}>
                     Consultar
                 </Button>
             </div>
@@ -115,35 +118,39 @@ function ReporteReparacionesVsTiposAutos() {
                     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Tipo de reparacion</TableCell>
-                                <TableCell>Cantidad Sedan</TableCell>
-                                <TableCell>Monto Sedan</TableCell>
-                                <TableCell>Cantidad Hatchback</TableCell>
-                                <TableCell>Monto Hatchback</TableCell>
-                                <TableCell>Cantidad Suv</TableCell>
-                                <TableCell>Monto Suv</TableCell>
-                                <TableCell>Cantidad Pickup</TableCell>
-                                <TableCell>Monto Pickup</TableCell>
-                                <TableCell>Cantidad Furgoneta</TableCell>
-                                <TableCell>Monto Furgoneta</TableCell>
-                                <TableCell>Monto total reparaciones</TableCell>
+                                <TableCell>Tipo de reparación</TableCell>
+                                <TableCell>Mes</TableCell>
+                                <TableCell>Cantidad autos</TableCell>
+                                <TableCell>Monto</TableCell>
+                                <TableCell>Mes</TableCell>
+                                <TableCell>Cantidad autos</TableCell>
+                                <TableCell>Monto</TableCell>
+                                <TableCell>Variación cantidad</TableCell>
+                                <TableCell>Variación monto</TableCell>
+                                <TableCell>Mes</TableCell>
+                                <TableCell>Cantidad autos</TableCell>
+                                <TableCell>Monto</TableCell>
+                                <TableCell>Variación cantidad</TableCell>
+                                <TableCell>Variación monto</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {reporte.map(item => (
                                 <TableRow key={item.reparacion}>
                                     <TableCell>{item.reparacion}</TableCell>
-                                    <TableCell>{item.cantidadSedan}</TableCell>
-                                    <TableCell>{item.montoSedan}</TableCell>
-                                    <TableCell>{item.cantidadHatchback}</TableCell>
-                                    <TableCell>{item.montoHatchback}</TableCell>
-                                    <TableCell>{item.cantidadSuv}</TableCell>
-                                    <TableCell>{item.montoSuv}</TableCell>
-                                    <TableCell>{item.cantidadPickup}</TableCell>
-                                    <TableCell>{item.montoPickup}</TableCell>
-                                    <TableCell>{item.cantidadFurgoneta}</TableCell>
-                                    <TableCell>{item.montoFurgoneta}</TableCell>
-                                    <TableCell>{item.montoTotalReparaciones}</TableCell>
+                                    <TableCell>{obtenerNombreMes(item.mes1)}</TableCell>
+                                    <TableCell>{item.cantidadAutos1}</TableCell>
+                                    <TableCell>{item.monto1}</TableCell>
+                                    <TableCell>{obtenerNombreMes(item.mes2)}</TableCell>
+                                    <TableCell>{item.cantidadAutos2}</TableCell>
+                                    <TableCell>{item.monto2}</TableCell>
+                                    <TableCell>{item.variacionCantidad2}%</TableCell>
+                                    <TableCell>{item.variacionMonto2}%</TableCell>
+                                    <TableCell>{obtenerNombreMes(item.mes3)}</TableCell>
+                                    <TableCell>{item.cantidadAutos3}</TableCell>
+                                    <TableCell>{item.monto3}</TableCell>
+                                    <TableCell>{item.variacionCantidad3}%</TableCell>
+                                    <TableCell>{item.variacionMonto3}%</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -154,4 +161,4 @@ function ReporteReparacionesVsTiposAutos() {
     );
 }
 
-export default ReporteReparacionesVsTiposAutos;
+export default ReporteCompararMeses;

@@ -19,6 +19,11 @@ import HistoryIcon from "@mui/icons-material/History";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { useNavigate } from "react-router-dom";
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import BuildIcon from '@mui/icons-material/Build';
+import FeedIcon from '@mui/icons-material/Feed';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import NoCrashIcon from '@mui/icons-material/NoCrash';
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const navigate = useNavigate();
@@ -39,6 +44,22 @@ export default function Sidemenu({ open, toggleDrawer }) {
 
         <Divider />
 
+        <ListItemButton onClick={() => navigate("/ingresoTaller")}>
+          <ListItemIcon>
+          <BuildIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Ingresar al taller" />
+        </ListItemButton>
+
+        <ListItemButton onClick={() => navigate("/retiroTaller")}>
+          <ListItemIcon>
+          <NoCrashIcon />
+          </ListItemIcon>
+          <ListItemText primary="Retirar del Taller" />
+        </ListItemButton>
+
+        <Divider />
+
         <ListItemButton onClick={() => navigate("/automovil/list")}>
           <ListItemIcon>
           <DirectionsCarIcon />
@@ -50,7 +71,7 @@ export default function Sidemenu({ open, toggleDrawer }) {
           <ListItemIcon>
             <HistoryIcon />
           </ListItemIcon>
-          <ListItemText primary="Listado de historiales" />
+          <ListItemText primary="Listado de Registros" />
         </ListItemButton>
 
         {/*<ListItemButton onClick={() => navigate("/agregarReparacion/list")}>
@@ -63,7 +84,7 @@ export default function Sidemenu({ open, toggleDrawer }) {
 
         <ListItemButton onClick={() => navigate("/reparaciones/list")}>
           <ListItemIcon>
-            <HistoryIcon />
+            <ConstructionIcon />
           </ListItemIcon>
           <ListItemText primary="Listado de Reparaciones" />
         </ListItemButton>
@@ -72,32 +93,25 @@ export default function Sidemenu({ open, toggleDrawer }) {
       <Divider />
 
       <List>
-        <ListItemButton onClick={() => navigate("/reportes/ReporteTiempoPromedio")}>
-          <ListItemIcon>
-            <DiscountIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reporte tiempo promedio" />
-        </ListItemButton>
-
         <ListItemButton onClick={() => navigate("/reportes/ReporteReparacionesVsTiposAutos")}>
           <ListItemIcon>
-            <MedicationLiquidIcon />
+            <FeedIcon />
           </ListItemIcon>
           <ListItemText primary="Reporte reparaciones Vs tipo de automovil" />
         </ListItemButton>
 
-        <ListItemButton onClick={() => navigate("/reportes/ReporteReparacionesVsTipoMotor")}>
+        <ListItemButton onClick={() => navigate("/reportes/ReporteCompararMeses")}>
           <ListItemIcon>
-            <MedicationLiquidIcon />
+            <FeedIcon />
           </ListItemIcon>
-          <ListItemText primary="Reporte reparaciones Vs tipo de motor" />
+          <ListItemText primary="Reporte de comparación de meses" />
         </ListItemButton>
 
         <Divider />
 
         <ListItemButton onClick={() => navigate("/bonos/list")}>
           <ListItemIcon>
-            <MedicationLiquidIcon />
+            <SummarizeIcon />
           </ListItemIcon>
           <ListItemText primary="Datos de descuento por bonos" />
         </ListItemButton>

@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface DatosBonosRepository extends JpaRepository<DatosBonosEntity, Long> {
     public DatosBonosEntity findByMarcaAutomovil(String marca);
-    public DatosBonosEntity findById(long id);
+    //public DatosBonosEntity findById(long id);
 
 }

@@ -54,19 +54,4 @@ public class ReparacionService {
         return reparacionRepository.findById(id).get();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

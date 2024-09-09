@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import historialReparacionesService from "../services/historialReparaciones.service";
 import TextField from "@mui/material/TextField";
@@ -16,12 +16,20 @@ const AddEditHistorialReparaciones = () => {
   const [fechaClienteSeLlevaVehiculo, setFechaClienteSeLlevaVehiculo] = useState("");
   const [horaClienteSeLlevaVehiculo, setHoraClienteSeLlevaVehiculo] = useState("");
   const { id } = useParams();
+  const [searchParams] = useSearchParams(); // Hook para obtener los parámetros de búsqueda
   const [titleHistorialReparacionesForm, setTitleHistorialReparacionesForm] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const initialPatente = searchParams.get("patente");
+    if (initialPatente) {
+      setPatente(initialPatente);
+    }
+  }, [searchParams]);
+
   const saveHistorial = (e) => {
     e.preventDefault();
-
+  
     const historialReparaciones = {
       patente,
       fechaIngresoTaller,
@@ -37,13 +45,13 @@ const AddEditHistorialReparaciones = () => {
       pagado: false,
       id
     };
-
+  
     if (id) {
       historialReparacionesService
         .update(historialReparaciones)
         .then((response) => {
           console.log("El Historial de Reparaciones ha sido actualizado.", response.data);
-          navigate("/historialreparaciones/list");
+          navigate(`/pagar/${historialReparaciones.patente}`);
         })
         .catch((error) => {
           console.log("Ha ocurrido un error al intentar actualizar datos del historial de reparaciones.", error);
@@ -53,13 +61,14 @@ const AddEditHistorialReparaciones = () => {
         .create(historialReparaciones)
         .then((response) => {
           console.log("El historial de reparaciones ha sido añadido.", response.data);
-          navigate("/historialreparaciones/list");
+          navigate(`/reparaciones/select/${response.data.id}/${response.data.patente}`);
         })
         .catch((error) => {
           console.log("Ha ocurrido un error al intentar crear un nuevo historial de reparaciones.", error);
         });
     }
   };
+  
 
   useEffect(() => {
     if (id) {
@@ -79,7 +88,7 @@ const AddEditHistorialReparaciones = () => {
           console.log("Se ha producido un error.", error);
         });
     } else {
-      setTitleHistorialReparacionesForm("Nuevo Historial de Reparaciones");
+      setTitleHistorialReparacionesForm("Nuevo ingreso al taller de reparaciones");
     }
   }, [id]);
 
@@ -111,12 +120,15 @@ const AddEditHistorialReparaciones = () => {
             variant="standard"
             onChange={(e) => setPatente(e.target.value)}
             helperText="Ej: CFTF45"
+            InputProps={{
+              readOnly: !!id,
+            }}
             InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 230 } 
+              style: { position: 'absolute', top: 0, left: 230 } 
             }}
           />
         </FormControl>
-        
+
         <FormControl fullWidth>
           <TextField
             id="fechaIngresoTaller"
@@ -125,8 +137,11 @@ const AddEditHistorialReparaciones = () => {
             value={fechaIngresoTaller}
             variant="standard"
             onChange={(e) => setFechaIngresoTaller(e.target.value)}
+            InputProps={{
+              readOnly: !!id,
+            }}
             InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 170 } 
+              style: { position: 'absolute', top: 0, left: 170 } 
             }}
           />
         </FormControl>
@@ -139,67 +154,74 @@ const AddEditHistorialReparaciones = () => {
             value={horaIngresoTaller}
             variant="standard"
             onChange={(e) => setHoraIngresoTaller(e.target.value)}
+            InputProps={{
+              readOnly: !!id,
+            }}
             InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 175 } 
+              style: { position: 'absolute', top: 0, left: 175 } 
             }}
             />
         </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="fechaSalidaTaller"
-            label="Fecha de salida del taller"
-            type="date"
-            value={fechaSalidaTaller}
-            variant="standard"
-            onChange={(e) => setFechaSalidaTaller(e.target.value)}
-            InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 170 } 
-            }}
-          />
-        </FormControl>
+        {id && (
+          <>
+            <FormControl fullWidth>
+              <TextField
+                id="fechaSalidaTaller"
+                label="Fecha de salida del taller"
+                type="date"
+                value={fechaSalidaTaller}
+                variant="standard"
+                onChange={(e) => setFechaSalidaTaller(e.target.value)}
+                InputLabelProps={{
+                  style: { position: 'absolute', top: 0, left: 170 } 
+                }}
+              />
+            </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="horaSalidaTaller"
-            label="Hora de salida del taller"
-            type="time"
-            value={horaSalidaTaller}
-            variant="standard"
-            onChange={(e) => setHoraSalidaTaller(e.target.value)}
-            InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 175 } 
-            }}
-          />
-        </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id="horaSalidaTaller"
+                label="Hora de salida del taller"
+                type="time"
+                value={horaSalidaTaller}
+                variant="standard"
+                onChange={(e) => setHoraSalidaTaller(e.target.value)}
+                InputLabelProps={{
+                  style: { position: 'absolute', top: 0, left: 175 } 
+                }}
+              />
+            </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="fechaClienteSeLlevaVehiculo"
-            label="Fecha en que el cliente se lleva el vehículo"
-            type="date"
-            value={fechaClienteSeLlevaVehiculo}
-            variant="standard"
-            onChange={(e) => setFechaClienteSeLlevaVehiculo(e.target.value)}
-            InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 101 } 
-            }}
-          />
-        </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id="fechaClienteSeLlevaVehiculo"
+                label="Fecha en que el cliente se lleva el vehículo"
+                type="date"
+                value={fechaClienteSeLlevaVehiculo}
+                variant="standard"
+                onChange={(e) => setFechaClienteSeLlevaVehiculo(e.target.value)}
+                InputLabelProps={{
+                  style: { position: 'absolute', top: 0, left: 101 } 
+                }}
+              />
+            </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="horaClienteSeLlevaVehiculo"
-            label="Hora en que el cliente se lleva el vehículo"
-            type="time"
-            value={horaClienteSeLlevaVehiculo}
-            variant="standard"
-            onChange={(e) => setHoraClienteSeLlevaVehiculo(e.target.value)}
-            InputLabelProps={{
-            style: { position: 'absolute', top: 0, left: 102 } 
-            }}
-          />
-        </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id="horaClienteSeLlevaVehiculo"
+                label="Hora en que el cliente se lleva el vehículo"
+                type="time"
+                value={horaClienteSeLlevaVehiculo}
+                variant="standard"
+                onChange={(e) => setHoraClienteSeLlevaVehiculo(e.target.value)}
+                InputLabelProps={{
+                  style: { position: 'absolute', top: 0, left: 102 } 
+                }}
+              />
+            </FormControl>
+          </>
+        )}
 
         <FormControl>
           <br />
@@ -215,7 +237,7 @@ const AddEditHistorialReparaciones = () => {
         </FormControl>
       </form>
       <hr />
-      <Link to="/historialreparaciones/list">Volver a la lista de historial de reparaciones</Link>
+      <Link to="/ingresoTaller">Retroceder</Link>
     </Box>
   );
 };
