@@ -1,17 +1,12 @@
 --Insertar Bonos
-INSERT INTO public.datos_bonos(marca_automovil, cantidad_bonos, monto_bono)
+INSERT INTO public.bond_data(marca_automovil, cantidad_bonos, monto_bono)
 VALUES ('Toyota', 5, 70000),
        ('Ford', 2, 50000),
        ('Hyundai', 1, 30000),
        ('Honda', 7, 40000);
 
-
-
-
-
-
--- Insertar automovil
-INSERT INTO public.automoviles(patente, marca, modelo, tipo, anio_fabricacion, motor, cant_asientos, kilometraje)
+-- Insertar automoviles
+INSERT INTO public.cars(patent, brand, model, type, year, engine, seats, mileage)
 VALUES ('CFYF55', 'Hyundai', 'Getz', 'Sedan', 2010, 'Gasolina', 5,15000),
        ('TW6977', 'Ford', 'Grand i10', 'Hatchback', 2021, 'Gasolina', 5,4000),
        ('FHKJ23', 'Toyota', 'Corolla', 'Sedan', 2015, 'Hibrido', 5,10000),

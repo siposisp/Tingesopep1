@@ -5,24 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "reparaciones")
+@Table(name = "bondData")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReparacionEntity {
+public class BondDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
     private Long id;
 
-    private int tipoReparacion;
-    private String descripcion;
+    private String marcaAutomovil;//Marca de automovil
+    private int cantidadBonos;//Cantidad de bonos
+    private int montoBono;//Monto del bono
 
-    //Foranea
-    private int idHistorialReparaciones;
-    private String patente;
 }
