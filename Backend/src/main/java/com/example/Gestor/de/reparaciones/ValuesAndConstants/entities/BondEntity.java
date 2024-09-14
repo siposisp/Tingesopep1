@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.App.entities;
+package com.example.Gestor.de.reparaciones.ValuesAndConstants.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BondEntity {
+    //Bond es descuento por bonos, no lo incorporé an la
+    //entidad Discount debido a la practicidad que tiene tener
+    //esta clase, además, esta clase tiene una tabla intermedia
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

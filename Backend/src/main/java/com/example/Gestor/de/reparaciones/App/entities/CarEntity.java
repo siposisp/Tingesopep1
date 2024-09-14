@@ -19,7 +19,7 @@ public class CarEntity {
     private String patent;//4 letras y 2 números
     private String brand;//Marca como Toyota, Kia, Honda, Ford, Chevrolet, Hyundai, etc.
     private String model;
-    private String type;//Sedan, Hatchback, SUV, Pickup o Furgoneta)
+    private String type;//Sedan, Hatchback, SUV, Pickup o Furgoneta
     private int year; //Año de fabricación
     private String engine;//Motor. gasolina, diésel, híbrido o eléctrico
     private int seats;//Cantidad de asientos

@@ -11,12 +11,18 @@ import java.util.ArrayList;
 public class CarService {
     @Autowired
     CarRepository carRepository;
-    public ArrayList<CarEntity> getCars(){
-        return (ArrayList<CarEntity>) carRepository.findAll();
-    }
+
+    // --------------------------CREATE--------------------------
 
     public CarEntity saveCar(CarEntity car){
         return carRepository.save(car);
+    }
+
+
+    // ---------------------------READ---------------------------
+
+    public ArrayList<CarEntity> getCars(){
+        return (ArrayList<CarEntity>) carRepository.findAll();
     }
 
     public CarEntity getCarById(Long id){
@@ -28,9 +34,14 @@ public class CarService {
     }
 
 
+    // --------------------------UPDATE--------------------------
+
     public CarEntity updateCar(CarEntity car) {
         return carRepository.save(car);
     }
+
+
+    // --------------------------DELETE--------------------------
 
     public boolean deleteCar(Long id) throws Exception {
         try{
@@ -51,4 +62,5 @@ public class CarService {
         }
 
     }
+
 }

@@ -1,7 +1,7 @@
 package com.example.Gestor.de.reparaciones.App.controller;
 
-import com.example.Gestor.de.reparaciones.App.entities.BondEntity;
-import com.example.Gestor.de.reparaciones.App.services.BondService;
+import com.example.Gestor.de.reparaciones.ValuesAndConstants.entities.BondEntity;
+import com.example.Gestor.de.reparaciones.ValuesAndConstants.services.BondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package com.example.Gestor.de.reparaciones.App.services;
+package com.example.Gestor.de.reparaciones.ValuesAndConstants.services;
 
-import com.example.Gestor.de.reparaciones.App.entities.BondEntity;
-import com.example.Gestor.de.reparaciones.App.repositories.BondRepository;
+import com.example.Gestor.de.reparaciones.ValuesAndConstants.entities.BondEntity;
+import com.example.Gestor.de.reparaciones.ValuesAndConstants.repositories.BondRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
