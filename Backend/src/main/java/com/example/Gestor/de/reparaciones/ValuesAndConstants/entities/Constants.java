@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.entities;
+package com.example.Gestor.de.reparaciones.ValuesAndConstants.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "bondData")
+@Table(name = "constants")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BondDataEntity {
+public class Constants {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private Long id;
 
-    private String marcaAutomovil;//Marca de automovil
-    private int cantidadBonos;//Cantidad de bonos
-    private int montoBono;//Monto del bono
+    private double iva;
 
 }

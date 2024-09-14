@@ -1,7 +1,7 @@
-package com.example.Gestor.de.reparaciones.services;
+package com.example.Gestor.de.reparaciones.App.services;
 
-import com.example.Gestor.de.reparaciones.entities.CarEntity;
-import com.example.Gestor.de.reparaciones.repositories.CarRepository;
+import com.example.Gestor.de.reparaciones.App.entities.CarEntity;
+import com.example.Gestor.de.reparaciones.App.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

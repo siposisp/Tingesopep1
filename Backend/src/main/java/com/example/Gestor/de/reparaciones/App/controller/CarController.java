@@ -1,7 +1,7 @@
-package com.example.Gestor.de.reparaciones.controller;
+package com.example.Gestor.de.reparaciones.App.controller;
 
-import com.example.Gestor.de.reparaciones.entities.CarEntity;
-import com.example.Gestor.de.reparaciones.services.CarService;
+import com.example.Gestor.de.reparaciones.App.entities.CarEntity;
+import com.example.Gestor.de.reparaciones.App.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

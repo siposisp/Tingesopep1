@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.entities;
+package com.example.Gestor.de.reparaciones.App.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

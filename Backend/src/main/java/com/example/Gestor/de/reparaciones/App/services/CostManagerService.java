@@ -1,0 +1,199 @@
+package com.example.Gestor.de.reparaciones.App.services;
+
+import com.example.Gestor.de.reparaciones.App.entities.CarEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CostManagerService {
+    @Autowired
+    private BondService bondService;
+
+    //Obtener el porcentaje de recargo por kilometraje
+    public double getMileageSurchargePercentage(CarEntity car){
+        int mileage = car.getMileage();
+        String type = car.getType();
+        double percentage = 0;
+        if (mileage >= 0 && mileage <= 5000){
+            percentage = switch (type) {
+                case "Sedan", "Pickup", "SUV", "Hatchback", "Furgoneta" -> 0;
+                default -> percentage;
+            };
+        }else if (mileage >= 5001 && mileage <= 12000){
+            percentage = switch (type) {
+                case "Sedan", "Hatchback" -> 0.03;
+                case "SUV", "Furgoneta", "Pickup" -> 0.05;
+                default -> percentage;
+            };
+        }else if (mileage >= 12001 && mileage <= 25000){
+            percentage = switch (type) {
+                case "Sedan", "Hatchback" -> 0.07;
+                case "SUV", "Furgoneta", "Pickup" -> 0.09;
+                default -> percentage;
+            };
+        }else if (mileage >= 25001 && mileage <= 40000){
+            percentage = switch (type) {
+                case "Sedan", "Furgoneta", "Pickup", "SUV", "Hatchback" -> 0.12;
+                default -> percentage;
+            };
+        }else if (mileage >= 40001){
+            percentage = switch (type) {
+                case "Sedan", "Pickup", "Furgoneta", "Hatchback", "SUV" -> 0.2;
+                default -> percentage;
+            };
+        }
+        return percentage;
+    }
+
+/*
+    public double getPorcentajeRecargoAntiguedad(AutomovilEntity automovil){
+        int edad = 2024 - automovil.getAnioFabricacion();
+        String tipoAuto = automovil.getTipo();
+        double porcentajeRecargo = 0.0;
+        if (edad >= 0 && edad <= 5){
+            porcentajeRecargo = switch (tipoAuto) {
+                case "Sedan" -> 0;
+                case "Diesel" -> 0;
+                case "Hatchback" -> 0;
+                case "Pickup" -> 0;
+                case "Furgoneta" -> 0;
+                default -> porcentajeRecargo;
+            };
+        }else if (edad >= 6 && edad <= 10){
+            porcentajeRecargo = switch (tipoAuto) {
+                case "Sedan" -> 0.05;
+                case "Diesel" -> 0.05;
+                case "Hatchback" -> 0.07;
+                case "Pickup" -> 0.07;
+                case "Furgoneta" -> 0.07;
+                default -> porcentajeRecargo;
+            };
+        }else if (edad >= 11 && edad <= 15){
+            porcentajeRecargo = switch (tipoAuto) {
+                case "Sedan" -> 0.09;
+                case "Diesel" -> 0.09;
+                case "Hatchback" -> 0.11;
+                case "Pickup" -> 0.11;
+                case "Furgoneta" -> 0.11;
+                default -> porcentajeRecargo;
+            };
+        }else if (edad >= 16){
+            porcentajeRecargo = switch (tipoAuto) {
+                case "Sedan" -> 0.15;
+                case "Diesel" -> 0.15;
+                case "Hatchback" -> 0.2;
+                case "Pickup" -> 0.2;
+                case "Furgoneta" -> 0.2;
+                default -> porcentajeRecargo;
+            };
+        }
+        return porcentajeRecargo;
+    }
+
+
+
+
+    public double getPorcentajeRecargoRetraso(HistorialEntity historialReparaciones){
+        LocalDate fechasSalida = historialReparaciones.getFechaSalidaTaller();
+        LocalDate fechaRetirada = historialReparaciones.getFechaClienteSeLlevaVehiculo();
+
+        //Calcular diferencia entre fechas
+        long diferenciaEnDias = ChronoUnit.DAYS.between(fechasSalida, fechaRetirada);
+
+        //Si hay retraso, calcular el recargo
+        double recargo = 0;
+        if (diferenciaEnDias > 0) {
+            recargo = 0.05 * diferenciaEnDias; // 5% del monto total por cada día de retraso
+        }
+        return recargo;
+    }
+
+
+    public double getPorcentajeDescuentoDia(LocalDate fechaEntrada, LocalTime horaEntrada){
+        DayOfWeek diaDeLaSemana = fechaEntrada.getDayOfWeek();
+        int horaDeEntrada = horaEntrada.getHour();
+
+        //Verificar día de la semana
+        if((diaDeLaSemana == DayOfWeek.MONDAY || diaDeLaSemana == DayOfWeek.THURSDAY) && (horaDeEntrada >= 9 && horaDeEntrada < 12)){
+            return 0.1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+
+
+    public double getDescuentoCantidadReparaciones(AutomovilEntity automovil, int cantidadReparaciones){
+        String tipoMotor = automovil.getMotor();
+        double porcentajeRecargo = 0;
+        if (cantidadReparaciones >= 1 && cantidadReparaciones <= 2){
+            porcentajeRecargo = switch (tipoMotor) {
+                case "Gasolina" -> 0.05;
+                case "Diesel" -> 0.07;
+                case "Hibrido" -> 0.1;
+                case "Electrico" -> 0.08;
+                default -> porcentajeRecargo;
+            };
+        }else if (cantidadReparaciones >= 3 && cantidadReparaciones <= 5){
+            porcentajeRecargo = switch (tipoMotor) {
+                case "Gasolina" -> 0.1;
+                case "Diesel" -> 0.12;
+                case "Hibrido" -> 0.15;
+                case "Electrico" -> 0.13;
+                default -> porcentajeRecargo;
+            };
+        }else if (cantidadReparaciones >= 6 && cantidadReparaciones <= 9){
+            porcentajeRecargo = switch (tipoMotor) {
+                case "Gasolina" -> 0.15;
+                case "Diesel" -> 0.17;
+                case "Hibrido" -> 0.2;
+                case "Electrico" -> 0.18;
+                default -> porcentajeRecargo;
+            };
+        }else if (cantidadReparaciones >= 10){
+            porcentajeRecargo = switch (tipoMotor) {
+                case "Gasolina" -> 0.2;
+                case "Diesel" -> 0.22;
+                case "Hibrido" -> 0.25;
+                case "Electrico" -> 0.23;
+                default -> porcentajeRecargo;
+            };
+        }
+        return porcentajeRecargo;
+    }
+
+
+
+
+    public int getMontoDescuentoBonos(AutomovilEntity automovil) {
+        String marca = automovil.getMarca();
+
+        // Verificar si la marca es null o está vacía
+        if (marca == null || marca.isEmpty()) {
+            return 0; // Devolver un valor predeterminado (en este caso, 0)
+        }
+
+        // Obtener los datos de bonos por la marca
+        DatosBonosEntity datosBono = datosBonosService.getDatosBonosByMarca(marca);
+
+        // Verificar si se encontraron datos de bonos para esa marca
+        if (datosBono != null) {
+            // Si hay bonos disponibles, decrementar la cantidad y devolver el monto del bono
+            if (datosBono.getCantidadBonos() > 0) {
+                datosBono.setCantidadBonos(datosBono.getCantidadBonos() - 1);
+                return datosBono.getMontoBono();
+            } else {
+                // Si no hay bonos disponibles, devolver 0
+                return 0;
+            }
+        } else {
+            // Si no se encontraron datos de bonos para esa marca, devolver 0
+            return 0;
+        }
+    }
+
+
+ */
+
+}

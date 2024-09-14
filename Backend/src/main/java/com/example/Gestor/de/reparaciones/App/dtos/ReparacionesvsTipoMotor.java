@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.dtos;
+package com.example.Gestor.de.reparaciones.App.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
