@@ -29,7 +29,7 @@ public class CarService {
         return carRepository.findById(id).get();
     }
 
-    public CarEntity getCarByPatent(String patent){
+    public CarEntity getCarByPatent(String patent) {
         return carRepository.findByPatent(patent);
     }
 
@@ -44,7 +44,7 @@ public class CarService {
     // --------------------------DELETE--------------------------
 
     public boolean deleteCar(Long id) throws Exception {
-        try{
+        try {
             carRepository.deleteById(id);
             return true;
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class CarService {
     }
 
     public boolean deleteCarByPatent(String patent) throws Exception {
-        try{
+        try {
             carRepository.deleteCarByPatent(patent);
             return true;
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.ValuesAndConstants.entities;
+package com.example.Gestor.de.reparaciones.ChargesAndDiscounts.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "bond")
+@Table(name = "bonuses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BondEntity {
-    //Bond es descuento por bonos, no lo incorporé an la
-    //entidad Discount debido a la practicidad que tiene tener
+    //Bond es descuento por bonos, no lo incorporé en la
+    //entidad Discount debido a la practicidad que hay al tener
     //esta clase, además, esta clase tiene una tabla intermedia
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
