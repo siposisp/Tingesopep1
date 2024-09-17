@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.App.controller;
+package com.example.Gestor.de.reparaciones.App.controllers;
 
 import com.example.Gestor.de.reparaciones.App.entities.CarEntity;
 import com.example.Gestor.de.reparaciones.App.services.CarService;

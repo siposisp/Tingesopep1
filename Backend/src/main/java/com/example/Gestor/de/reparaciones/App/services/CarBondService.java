@@ -3,7 +3,9 @@ package com.example.Gestor.de.reparaciones.App.services;
 import com.example.Gestor.de.reparaciones.App.entities.CarBondEntity;
 import com.example.Gestor.de.reparaciones.App.repositories.CarBondRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CarBondService {
     @Autowired
     private CarBondRepository carBondRepository;

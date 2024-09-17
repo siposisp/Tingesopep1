@@ -5,7 +5,7 @@ Evaluación N°1 de TINGESO hecha por segunda vez
 ## Instrucciones para correr el proyecto
 
 # Prerrequisitos
-Se debe contar con las siguientes tecnologías para la ejecución optima del proyecto:
+Se debe contar con las siguientes tecnologías para la ejecución óptima del proyecto:
 	
 	• PgAdmin4
 	• Node.js

@@ -1,4 +1,4 @@
-package com.example.Gestor.de.reparaciones.App.controller;
+package com.example.Gestor.de.reparaciones.App.controllers;
 
 import com.example.Gestor.de.reparaciones.ChargesAndDiscounts.entities.BondEntity;
 import com.example.Gestor.de.reparaciones.ChargesAndDiscounts.services.BondService;
