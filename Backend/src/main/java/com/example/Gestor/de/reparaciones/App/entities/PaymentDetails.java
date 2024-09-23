@@ -1,7 +1,10 @@
 package com.example.Gestor.de.reparaciones.App.entities;
 
 import jakarta.persistence.Embeddable;
+import lombok.Data;
+import lombok.Getter;
 
+@Data
 @Embeddable
 public class PaymentDetails {
 
